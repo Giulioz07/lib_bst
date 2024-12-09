@@ -1,17 +1,13 @@
 #pragma once
+#include <iostream>
+using namespace std;
 class Node
 {
 private:
     int key;
     int weight;
-<<<<<<< HEAD
     Node* lchild;
     Node* rchild;
-=======
-    Node* child1;
-    Node* child2;
->>>>>>> e820ea0bc6a91fa09d2d053fb864c299dc7db261
-
 public:
     Node(int k);
     ~Node();
@@ -20,4 +16,9 @@ public:
     void inOrder();
     bool searchI(int k);
     bool searchR(int k);
+	Node* deleteNode(int k);
+	void Preorder();
+	void Postorderl();
+	friend ostream& operator<<(ostream& os,Node* n);
+	friend istream& operator>>(istream& is,Node* n);
 };
