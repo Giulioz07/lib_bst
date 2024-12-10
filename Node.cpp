@@ -81,14 +81,14 @@ Node* Node::insertI(int k)
     }
 	return nullptr;
 }
-void Node::inOrder()
+void Node::Inorder()
 {
     if(lchild != nullptr) {
-        this->lchild->inOrder();
+        this->lchild->Inorder();
     }
     cout << key << endl;
     if(rchild != nullptr) {
-        this->rchild->inOrder();
+        this->rchild->Inorder();
 	}
 }
 bool Node::searchI(int k)
@@ -132,29 +132,26 @@ Node* Node::deleteNode(int k){
         return nullptr;
     }
     if(this->key==k){
-        if (this->lchild == nullptr && this->rchild == nullptr) {
+        if (lchild == nullptr && rchild == nullptr) {
             delete this;
             return nullptr;
         }
-        else {
-            if (this->lchild == nullptr) {
-                int temp = this->key;
-                this->key = this->rchild->key;
-                this->rchild->key=temp;
-                return this->deleteNode(this->key);
-            } else if (this->rchild == nullptr) {
-                int temp = this->key;
-                this->key = this->lchild->key;
-                this->lchild->key=temp;
-                return this->deleteNode(this->key);
-            } else {
-                Node* c = this->rchild;
-                while (c->lchild != nullptr) {
-                    c = c->lchild;
-                }
-                this->key = c->key;
-                return this->rchild->deleteNode(c->key);
+        if (lchild == nullptr) {
+            Node* temp = rchild;
+            *this = *temp;
+            delete temp;
+			return nullptr;
+        } else if (rchild == nullptr) {
+            Node* temp = lchild;
+            *this = *temp;
+            delete temp;
+			return nullptr;
+        } else {
+            Node* temp = rchild;
+            while (temp->lchild != nullptr) {
+                temp = temp->lchild;
             }
+            return temp->deleteNode(temp->key);
         }
     }
     else if (k < this->key) {
@@ -166,18 +163,32 @@ Node* Node::deleteNode(int k){
 void Node::Preorder(){
 	cout<<this->key<<endl;
 	if(this->lchild!=nullptr){
-		Preordertraversal(this->lchild);
+		this->lchild->Preorder();
 	}
 	if(this->rchild!=nullptr){
-		Preordertraversal(this->rchild);
+		this->rchild->Preorder();
 	}
 }
-void Node::Inorder(){
+void Node::Postorder(){
 	if(this->lchild!=nullptr){
-		Inordertraversal(this->lchild);
+		this->lchild->Postorder();
 	}
 	if(this->rchild!=nullptr){
-		Inordertraversal(this->rchild);
+		this->rchild->Postorder();
 	}
 	cout<<this->key<<endl;
+}
+bool Node::isBST() {
+        static int prev = INT_MIN;
+        if (this == nullptr){
+			return true;
+		}
+        if (lchild->isBST()){
+			return true;
+		}
+        if (key <= prev) {
+			return false;
+		}
+        prev = key;
+        return rchild->isBST();
 }

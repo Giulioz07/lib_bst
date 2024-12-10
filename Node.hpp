@@ -13,12 +13,13 @@ public:
     ~Node();
     Node* insertR(int k);
     Node* insertI(int k);
-    void inOrder();
+    void Inorder();
     bool searchI(int k);
     bool searchR(int k);
 	Node* deleteNode(int k);
 	void Preorder();
-	void Postorderl();
+	void Postorder();
+	bool isBST();
 	friend ostream& operator<<(ostream& os,Node* n);
 	friend istream& operator>>(istream& is,Node* n);
 };
